@@ -30,7 +30,7 @@ export default function Footer() {
                   <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.534 5.858L0 24l6.335-1.51A11.95 11.95 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.791 9.791 0 01-4.994-1.368l-.358-.213-3.76.897.947-3.666-.234-.376A9.79 9.79 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/>
                 </svg>
               </a>
-              <a href={`tel:+${PHONE_NUMBER}`}
+              <a href={`tel:${PHONE_NUMBER}`}
                 className="w-10 h-10 rounded-full border border-theme hover:border-gold-500/35 hover:bg-gold-500/8 flex items-center justify-center transition-all duration-200"
                 aria-label="Phone">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-theme-muted">
