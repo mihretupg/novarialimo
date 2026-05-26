@@ -1,24 +1,42 @@
 # Novaria Limo
 
-Luxury limo booking site with a React/Vite frontend and a PHP/MySQL backend.
+Luxury limo booking website for Novaria Limo, built with a React/Vite frontend and a PHP/MySQL backend.
 
-## Backend Setup
+## Project Overview
 
-Fast XAMPP setup on Windows:
+Novaria Limo provides online booking, service information, fleet highlights, user sign-in, and an admin dashboard for reviewing bookings.
 
-```powershell
-powershell -ExecutionPolicy Bypass -File scripts\setup_backend.ps1
+## Tech Stack
+
+- React
+- Vite
+- Tailwind CSS
+- PHP
+- MySQL
+
+## Local Setup
+
+Install frontend dependencies:
+
+```bash
+npm install
 ```
 
-That script imports the schema, creates the admin/test users, verifies the tables, and starts the PHP backend.
+Start the frontend:
 
-1. Create the MySQL database and tables:
-
-```sql
-SOURCE backend/database/schema.sql;
+```bash
+npm run dev
 ```
 
-2. Configure environment variables for your local PHP server:
+Start the PHP backend from the project root:
+
+```bash
+php -S localhost:8000
+```
+
+## Environment
+
+Configure the backend environment for the target server:
 
 ```bash
 NOVARIA_DB_HOST=127.0.0.1
@@ -28,58 +46,23 @@ NOVARIA_DB_USER=root
 NOVARIA_DB_PASS=
 NOVARIA_FRONTEND_URL=http://localhost:5173
 NOVARIA_ALLOWED_ORIGINS=http://localhost:5173,http://127.0.0.1:5173
-GOOGLE_CLIENT_ID=your-google-client-id
-GOOGLE_CLIENT_SECRET=your-google-client-secret
-FACEBOOK_CLIENT_ID=your-facebook-app-id
-FACEBOOK_CLIENT_SECRET=your-facebook-app-secret
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+FACEBOOK_CLIENT_ID=
+FACEBOOK_CLIENT_SECRET=
 ```
 
-3. In Google and Facebook OAuth settings, add these callback URLs:
+## Database
 
-```text
-http://localhost:8000/backend/oauth/callback.php?provider=google
-http://localhost:8000/backend/oauth/callback.php?provider=facebook
+Import the database schema:
+
+```sql
+SOURCE backend/database/schema.sql;
 ```
 
-4. Seed an admin account:
+## Production Notes
 
-```bash
-php backend/database/seed_admin.php admin@novaria.local "ChangeMeNow!123"
-```
-
-Optional test riders:
-
-```bash
-php backend/database/seed_test_users.php
-```
-
-5. Start PHP from the project root:
-
-```bash
-php -S localhost:8000
-```
-
-## Frontend Setup
-
-```bash
-npm install
-npm run dev
-```
-
-The dashboard routes are:
-
-```text
-#login
-#dashboard
-#admin
-```
-
-Riders can register and sign in with Novaria email/password credentials, or continue through Google or Facebook social login. Admin login uses the seeded MySQL account.
-
-Security notes:
-
-- Passwords are stored with PHP `password_hash`.
-- Login, registration, logout, booking creation, and booking updates require a session CSRF token.
-- Login and registration endpoints are rate-limited through the `auth_attempts` table.
-- User registration always creates the `user` role; admin accounts must be seeded or managed server-side.
-- Use HTTPS in production and set `NOVARIA_SESSION_SECURE=true`.
+- Use HTTPS in production.
+- Configure live database credentials on the server.
+- Configure OAuth callback URLs for the production domain.
+- Keep local credentials and test account details out of the repository.
