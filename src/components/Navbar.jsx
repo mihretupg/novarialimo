@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Menu, X, MessageSquare } from 'lucide-react';
 import { NAV_LINKS, PHONE_NUMBER, WHATSAPP_NUMBER } from '../data';
 
-export default function Navbar({ user, onDashboard }) {
+export default function Navbar({ user, onDashboard, onTitleChange }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -12,8 +12,9 @@ export default function Navbar({ user, onDashboard }) {
     return () => window.removeEventListener('scroll', handler);
   }, []);
 
-  const handleNavClick = (href) => {
+  const handleNavClick = (href, title) => {
     setMobileOpen(false);
+    onTitleChange?.(title);
     document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
   };
 
@@ -24,7 +25,7 @@ export default function Navbar({ user, onDashboard }) {
       }`}>
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
           {/* Logo */}
-          <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          <button onClick={() => { onTitleChange?.('Novaria Limo'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
             className="inline-flex flex-col items-center leading-none focus:outline-none">
             <span className="text-xl font-black tracking-widest text-theme">NOVARIA</span>
             <span className="text-sm font-semibold tracking-[0.68em] text-gold-500 uppercase mt-1">Limo</span>
@@ -33,7 +34,7 @@ export default function Navbar({ user, onDashboard }) {
           {/* Desktop links */}
           <div className="hidden md:flex items-center gap-8">
             {NAV_LINKS.map((link) => (
-              <button key={link.href} onClick={() => handleNavClick(link.href)}
+              <button key={link.href} onClick={() => handleNavClick(link.href, link.label)}
                 className="text-sm font-medium text-theme-muted hover:text-gold-400 transition-colors duration-200 tracking-wide">
                 {link.label}
               </button>
@@ -49,11 +50,14 @@ export default function Navbar({ user, onDashboard }) {
               className="flex items-center gap-2 text-sm font-medium text-theme-muted hover:text-theme transition-colors">
               <WhatsAppIcon size={14} /><span>WhatsApp</span>
             </a>
-            <button onClick={onDashboard || (() => { window.location.hash = '#login'; })}
+            <button onClick={() => {
+              onTitleChange?.(user ? 'Dashboard' : 'Login');
+              (onDashboard || (() => { window.location.hash = '#login'; }))();
+            }}
               className="btn-outline px-4 py-2.5 rounded-full text-sm font-bold">
               {user ? 'Dashboard' : 'Login'}
             </button>
-            <button onClick={() => handleNavClick('#booking')}
+            <button onClick={() => handleNavClick('#booking', 'Booking')}
               className="btn-primary px-5 py-2.5 rounded-full text-sm font-bold">
               Book Now
             </button>
@@ -93,7 +97,7 @@ export default function Navbar({ user, onDashboard }) {
           </div>
           <nav className="flex flex-col gap-5">
             {NAV_LINKS.map((link) => (
-              <button key={link.href} onClick={() => handleNavClick(link.href)}
+              <button key={link.href} onClick={() => handleNavClick(link.href, link.label)}
                 className="text-left text-lg font-medium text-theme-muted hover:text-gold-400 transition-colors">
                 {link.label}
               </button>
@@ -112,11 +116,15 @@ export default function Navbar({ user, onDashboard }) {
               <span>WhatsApp</span>
             </a>
             </div>
-            <button onClick={() => handleNavClick('#booking')}
+            <button onClick={() => handleNavClick('#booking', 'Booking')}
               className="btn-primary w-full py-4 rounded-2xl text-base font-bold">
               Book Now
             </button>
-            <button onClick={() => { setMobileOpen(false); (onDashboard || (() => { window.location.hash = '#login'; }))(); }}
+            <button onClick={() => {
+              setMobileOpen(false);
+              onTitleChange?.(user ? 'Dashboard' : 'Login');
+              (onDashboard || (() => { window.location.hash = '#login'; }))();
+            }}
               className="btn-outline w-full py-4 rounded-2xl text-base font-bold">
               {user ? 'Dashboard' : 'Login'}
             </button>
