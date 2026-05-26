@@ -15,12 +15,12 @@ function useInView(t = 0.12) {
 }
 
 const CARDS = [
-  { icon: MessageSquare, title: 'SMS',      value: 'Text Us',        sub: 'Direct message',     action: () => window.open(`sms:${PHONE_NUMBER}?&body=Hi%20Novaria%2C%20I%27d%20like%20to%20book%20a%20ride.`, '_self'), highlight: true },
-  { icon: WhatsAppIcon,  title: 'WhatsApp', value: 'Chat Now',       sub: 'Fastest response',   action: () => window.open(`https://wa.me/${WHATSAPP_NUMBER}`, '_blank'), highlight: false },
-  { icon: Phone,         title: 'Phone',    value: PHONE_DISPLAY,    sub: 'Call anytime',       action: () => window.open(`tel:+${PHONE_NUMBER}`),                         highlight: false },
-  { icon: Mail,          title: 'Email',    value: '',               sub: 'Write to us',        action: () => window.open(`mailto:${EMAIL_ADDRESS}`),                       highlight: false },
-  { icon: MapPin,        title: 'Area',     value: 'Dallas, TX',     sub: 'DFW Metroplex',       action: null,                                                            highlight: false },
-  { icon: Clock,         title: 'Hours',    value: '24 / 7',         sub: '365 days a year',     action: null,                                                            highlight: false },
+  { icon: MessageSquare, title: 'SMS',      value: 'Text Us',        sub: 'Direct message',     href: `sms:${PHONE_NUMBER}?&body=Hi%20Novaria%2C%20I%27d%20like%20to%20book%20a%20ride.`, highlight: true },
+  { icon: WhatsAppIcon,  title: 'WhatsApp', value: 'Chat Now',       sub: 'Fastest response',   href: `https://wa.me/${WHATSAPP_NUMBER}`, target: '_blank', highlight: false },
+  { icon: Phone,         title: 'Phone',    value: PHONE_DISPLAY,    sub: 'Call anytime',       href: `tel:${PHONE_NUMBER}`, highlight: false },
+  { icon: Mail,          title: 'Email',    value: '',               sub: 'Write to us',        href: `mailto:${EMAIL_ADDRESS}`, highlight: false },
+  { icon: MapPin,        title: 'Area',     value: 'Dallas, TX',     sub: 'DFW Metroplex',      href: '', highlight: false },
+  { icon: Clock,         title: 'Hours',    value: '24 / 7',         sub: '365 days a year',    href: '', highlight: false },
 ];
 
 function WhatsAppIcon({ size = 20, className = '' }) {
@@ -54,28 +54,34 @@ export default function Contact() {
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6 mb-16">
-          {CARDS.map((item, i) => (
-            <div
-              key={item.title}
-              onClick={item.action || undefined}
-              className={`card-luxury rounded-3xl p-7 transition-all duration-700 ${item.action ? 'cursor-pointer' : ''} ${
-                item.highlight ? 'border-gold-500/25 bg-gold-500/5' : ''
-              } ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
-              style={{ transitionDelay: `${i * 100}ms` }}
-            >
-              <div className={`w-12 h-12 rounded-2xl flex items-center justify-center mb-5 ${
-                item.highlight ? 'bg-gold-500/20 border border-gold-500/30' : 'bg-black/[0.04] dark:bg-white/5 border border-theme'
-              }`}>
-                <item.icon size={20} className={item.highlight ? 'text-gold-400' : 'text-theme-muted'} />
+          {CARDS.map((item, i) => {
+            const Card = item.href ? 'a' : 'div';
+
+            return (
+              <Card
+                key={item.title}
+                href={item.href || undefined}
+                target={item.target}
+                rel={item.target === '_blank' ? 'noopener noreferrer' : undefined}
+                className={`card-luxury rounded-3xl p-7 transition-all duration-700 ${item.href ? 'cursor-pointer' : ''} ${
+                  item.highlight ? 'border-gold-500/25 bg-gold-500/5' : ''
+                } ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+                style={{ transitionDelay: `${i * 100}ms` }}
+              >
+                <div className={`w-12 h-12 rounded-2xl flex items-center justify-center mb-5 ${
+                  item.highlight ? 'bg-gold-500/20 border border-gold-500/30' : 'bg-black/[0.04] dark:bg-white/5 border border-theme'
+                }`}>
+                  <item.icon size={20} className={item.highlight ? 'text-gold-400' : 'text-theme-muted'} />
+                </div>
+                <p className="text-xs text-theme-subtle uppercase tracking-widest mb-1">{item.title}</p>
+                {item.value && (
+                  <p className={`text-lg font-bold mb-1 break-words ${item.highlight ? 'text-gold-400' : 'text-theme'}`}>{item.value}</p>
+                )}
+                <p className="text-xs text-theme-subtle">{item.sub}</p>
+              </Card>
+            );
+          })}
               </div>
-              <p className="text-xs text-theme-subtle uppercase tracking-widest mb-1">{item.title}</p>
-              {item.value && (
-                <p className={`text-lg font-bold mb-1 break-words ${item.highlight ? 'text-gold-400' : 'text-theme'}`}>{item.value}</p>
-              )}
-              <p className="text-xs text-theme-subtle">{item.sub}</p>
-            </div>
-          ))}
-        </div>
 
         {/* CTA banner */}
         <div className={`relative rounded-3xl overflow-hidden transition-all duration-700 delay-500 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
