@@ -18,7 +18,7 @@ const CARDS = [
   { icon: MessageSquare, title: 'SMS',      value: 'Text Us',        sub: 'Direct message',     href: `sms:${PHONE_NUMBER}?&body=Hi%20Novaria%2C%20I%27d%20like%20to%20book%20a%20ride.`, highlight: true },
   { icon: WhatsAppIcon,  title: 'WhatsApp', value: 'Chat Now',       sub: 'Fastest response',   href: `https://wa.me/${WHATSAPP_NUMBER}`, target: '_blank', highlight: false },
   { icon: Phone,         title: 'Phone',    value: PHONE_DISPLAY,    sub: 'Call anytime',       href: `tel:${PHONE_NUMBER}`, highlight: false },
-  { icon: Mail,          title: 'Email',    value: '',               sub: 'Write to us',        href: `mailto:${EMAIL_ADDRESS}`, highlight: false },
+  { icon: Mail,          title: 'Email',    value: 'Email Us',       sub: 'Write to us',        href: `mailto:${EMAIL_ADDRESS}`, highlight: false },
   { icon: MapPin,        title: 'Area',     value: 'Dallas, TX',     sub: 'DFW Metroplex',      href: '', highlight: false },
   { icon: Clock,         title: 'Hours',    value: '24 / 7',         sub: '365 days a year',    href: '', highlight: false },
 ];
