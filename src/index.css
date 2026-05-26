@@ -1,0 +1,249 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Theme Variables ──────────────────────────────────────── */
+:root {
+  --bg:          #F8F5EF;
+  --bg-surface:  #FFFFFF;
+  --bg-card:     rgba(0,0,0,0.025);
+  --bg-card-h:   rgba(245,166,35,0.06);
+  --bg-input:    rgba(0,0,0,0.04);
+  --text:        #0A0A0A;
+  --text-muted:  rgba(0,0,0,0.52);
+  --text-subtle: rgba(0,0,0,0.35);
+  --border:      rgba(0,0,0,0.09);
+  --border-gold: rgba(245,166,35,0.28);
+  --glass-bg:    rgba(255,255,255,0.75);
+  --glass-dark:  rgba(255,255,255,0.65);
+  --shadow:      0 20px 60px rgba(0,0,0,0.12);
+}
+
+:root.dark {
+  --bg:          #080808;
+  --bg-surface:  #0f0f0f;
+  --bg-card:     rgba(255,255,255,0.03);
+  --bg-card-h:   rgba(245,166,35,0.08);
+  --bg-input:    rgba(255,255,255,0.04);
+  --text:        #ffffff;
+  --text-muted:  rgba(255,255,255,0.52);
+  --text-subtle: rgba(255,255,255,0.30);
+  --border:      rgba(255,255,255,0.07);
+  --border-gold: rgba(245,166,35,0.22);
+  --glass-bg:    rgba(255,255,255,0.03);
+  --glass-dark:  rgba(0,0,0,0.45);
+  --shadow:      0 20px 60px rgba(0,0,0,0.55);
+}
+
+/* ─── Base ──────────────────────────────────────────────────── */
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: 'Manrope', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    transition: background-color 0.4s ease, color 0.4s ease;
+    overflow-x: hidden;
+  }
+
+  #root { width: 100%; min-height: 100vh; }
+
+  ::selection { background: rgba(245,166,35,0.25); color: var(--text); }
+
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: rgba(245,166,35,0.35); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(245,166,35,0.6); }
+}
+
+/* ─── Component utilities ───────────────────────────────────── */
+@layer utilities {
+  /* Gold shimmer text */
+  .text-gradient-gold {
+    background: linear-gradient(135deg, #f5a623, #ffd700, #f5a623);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmer 3s linear infinite;
+  }
+
+  /* Glassmorphism */
+  .glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--border);
+    transition: background 0.4s ease, border-color 0.4s ease;
+  }
+  .glass-dark {
+    background: var(--glass-dark);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--border);
+  }
+
+  /* Gold border + glow */
+  .gold-border { border: 1px solid var(--border-gold); }
+  .gold-glow   { box-shadow: 0 0 24px rgba(245,166,35,0.18); }
+
+  /* Section divider */
+  .section-divider {
+    width: 56px; height: 2px;
+    background: linear-gradient(90deg, transparent, #f5a623, transparent);
+  }
+
+  /* Luxury card */
+  .card-luxury {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    transition: background 0.35s ease, border-color 0.35s ease,
+                transform 0.35s cubic-bezier(0.4,0,0.2,1),
+                box-shadow 0.35s ease;
+  }
+  .card-luxury:hover {
+    background: var(--bg-card-h);
+    border-color: var(--border-gold);
+    transform: translateY(-5px);
+    box-shadow: var(--shadow);
+  }
+
+  /* Inputs */
+  .input-luxury {
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    color: var(--text);
+    transition: all 0.3s ease;
+  }
+  .input-luxury:focus {
+    outline: none;
+    border-color: rgba(245,166,35,0.5);
+    background: rgba(245,166,35,0.05);
+    box-shadow: 0 0 0 3px rgba(245,166,35,0.1);
+  }
+  .input-luxury::placeholder { color: var(--text-subtle); }
+  .input-luxury option { background: var(--bg-surface); color: var(--text); }
+
+  /* Buttons */
+  .btn-primary {
+    background: linear-gradient(135deg, #f5a623, #e8960f);
+    color: #000;
+    font-weight: 700;
+    transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+  }
+  .btn-primary:hover {
+    background: linear-gradient(135deg, #ffd700, #f5a623);
+    box-shadow: 0 8px 30px rgba(245,166,35,0.4);
+    transform: translateY(-2px);
+  }
+  .btn-primary:active { transform: translateY(0); }
+
+  .btn-outline {
+    background: transparent;
+    border: 1.5px solid var(--border);
+    color: var(--text);
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+  .btn-outline:hover {
+    border-color: rgba(245,166,35,0.55);
+    color: #f5a623;
+    background: rgba(245,166,35,0.05);
+  }
+
+  /* Display font */
+  .playfair { font-family: 'Cormorant Garamond', Georgia, serif; letter-spacing: 0.01em; }
+
+  /* Section bg */
+  .section-bg { background-color: var(--bg); transition: background-color 0.4s ease; }
+  .surface-bg { background-color: var(--bg-surface); transition: background-color 0.4s ease; }
+
+  /* Text helpers */
+  .text-theme       { color: var(--text); }
+  .text-theme-muted { color: var(--text-muted); }
+  .text-theme-subtle{ color: var(--text-subtle); }
+  .border-theme     { border-color: var(--border); }
+
+  /* Animations */
+  .animate-float      { animation: float 6s ease-in-out infinite; }
+  .animate-pulse-gold { animation: pulseGold 2.5s ease-in-out infinite; }
+
+  /* Card reveal (used in Fleet via inline style) */
+  .reveal-card { animation: revealCard 0.85s cubic-bezier(0.16,1,0.3,1) both; }
+
+  /* Speed lines on fleet photo */
+  .speed-lines::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent 0px,
+      transparent 40px,
+      rgba(255,255,255,0.015) 40px,
+      rgba(255,255,255,0.015) 41px
+    );
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+  .speed-lines:hover::after { opacity: 1; }
+
+  /* Marquee */
+  .marquee-track { animation: marquee 22s linear infinite; }
+}
+
+/* ─── Keyframes ─────────────────────────────────────────────── */
+@keyframes shimmer {
+  0%   { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50%     { transform: translateY(-14px); }
+}
+@keyframes pulseGold {
+  0%,100% { box-shadow: 0 0 16px rgba(245,166,35,0.18); }
+  50%     { box-shadow: 0 0 40px rgba(245,166,35,0.52), 0 0 70px rgba(245,166,35,0.14); }
+}
+@keyframes revealCard {
+  0%   { opacity:0; transform: translateY(48px) scale(0.96); filter: blur(3px); }
+  55%  { filter: blur(0px); }
+  100% { opacity:1; transform: translateY(0)   scale(1);    filter: blur(0px); }
+}
+@keyframes revealUp {
+  0%   { opacity:0; transform: translateY(28px) scale(0.97); }
+  100% { opacity:1; transform: translateY(0)    scale(1); }
+}
+@keyframes marquee {
+  0%   { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes borderSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes countUp {
+  from { opacity:0; transform: translateY(10px); }
+  to   { opacity:1; transform: translateY(0); }
+}
+
+/* ─── Light mode helpers for hero overlay ───────────────────── */
+:root:not(.dark) .hero-overlay-l { background: linear-gradient(to right, rgba(248,245,239,0.84) 0%, rgba(248,245,239,0.58) 34%, rgba(248,245,239,0.18) 54%, rgba(248,245,239,0.02) 76%); }
+:root.dark       .hero-overlay-l { background: linear-gradient(to right, rgba(8,8,8,0.84) 0%, rgba(8,8,8,0.58) 34%, rgba(8,8,8,0.18) 54%, rgba(8,8,8,0.02) 76%); }
+:root:not(.dark) .hero-overlay-b { background: linear-gradient(to top, rgba(248,245,239,0.82), transparent); }
+:root.dark       .hero-overlay-b { background: linear-gradient(to top, rgba(8,8,8,0.82), transparent); }
+:root:not(.dark) .hero-overlay-t { background: linear-gradient(to bottom, rgba(248,245,239,0.42), transparent); }
+:root.dark       .hero-overlay-t { background: linear-gradient(to bottom, rgba(8,8,8,0.42), transparent); }
