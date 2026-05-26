@@ -18,7 +18,7 @@ const CARDS = [
   { icon: MessageSquare, title: 'SMS',      value: 'Text Us',        sub: 'Direct message',     action: () => window.open(`sms:${PHONE_NUMBER}?&body=Hi%20Novaria%2C%20I%27d%20like%20to%20book%20a%20ride.`, '_self'), highlight: true },
   { icon: WhatsAppIcon,  title: 'WhatsApp', value: 'Chat Now',       sub: 'Fastest response',   action: () => window.open(`https://wa.me/${WHATSAPP_NUMBER}`, '_blank'), highlight: false },
   { icon: Phone,         title: 'Phone',    value: PHONE_DISPLAY,    sub: 'Call anytime',       action: () => window.open(`tel:+${PHONE_NUMBER}`),                         highlight: false },
-  { icon: Mail,          title: 'Email',    value: EMAIL_ADDRESS,    sub: 'Write to us',        action: () => window.open(`mailto:${EMAIL_ADDRESS}`),                       highlight: false },
+  { icon: Mail,          title: 'Email',    value: '',               sub: 'Write to us',        action: () => window.open(`mailto:${EMAIL_ADDRESS}`),                       highlight: false },
   { icon: MapPin,        title: 'Area',     value: 'Dallas, TX',     sub: 'DFW Metroplex',       action: null,                                                            highlight: false },
   { icon: Clock,         title: 'Hours',    value: '24 / 7',         sub: '365 days a year',     action: null,                                                            highlight: false },
 ];
@@ -69,7 +69,9 @@ export default function Contact() {
                 <item.icon size={20} className={item.highlight ? 'text-gold-400' : 'text-theme-muted'} />
               </div>
               <p className="text-xs text-theme-subtle uppercase tracking-widest mb-1">{item.title}</p>
-              <p className={`text-lg font-bold mb-1 break-words ${item.highlight ? 'text-gold-400' : 'text-theme'}`}>{item.value}</p>
+              {item.value && (
+                <p className={`text-lg font-bold mb-1 break-words ${item.highlight ? 'text-gold-400' : 'text-theme'}`}>{item.value}</p>
+              )}
               <p className="text-xs text-theme-subtle">{item.sub}</p>
             </div>
           ))}
