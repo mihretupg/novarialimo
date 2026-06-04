@@ -23,7 +23,7 @@ export default function Hero() {
     document.querySelector('#booking')?.scrollIntoView({ behavior: 'smooth' });
 
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden">
+    <section className="relative min-h-dvh flex items-center overflow-hidden">
 
       {/* ── Parallax photo layer ────────────────────────────────
           The container extends 120px beyond the section on both top
@@ -71,39 +71,39 @@ export default function Hero() {
         }} />
 
       {/* ── Content ── */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 pt-28 pb-20 grid md:grid-cols-2 gap-16 items-center">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 pt-28 sm:pt-32 pb-16 sm:pb-20 grid md:grid-cols-2 gap-10 lg:gap-16 items-center">
 
         {/* Left */}
         <div>
-          <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full border border-gold-500/30 bg-gold-500/8 mb-8 transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+          <div className={`inline-flex max-w-full items-center gap-2 px-3 sm:px-4 py-2 rounded-full border border-gold-500/30 bg-gold-500/8 mb-6 sm:mb-8 transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
             <MapPin size={13} className="text-gold-400" />
-            <span className="hidden sm:inline text-xs font-semibold tracking-widest uppercase text-gold-400 whitespace-nowrap">Premium Dallas Transportation</span>
-            <span className="sm:hidden text-[0.68rem] font-semibold tracking-wide uppercase text-gold-400 whitespace-nowrap">Premium Dallas Service</span>
+            <span className="hidden sm:inline text-xs font-semibold tracking-widest uppercase text-gold-400 whitespace-nowrap">Dallas-Fort Worth Luxury Transportation</span>
+            <span className="sm:hidden text-[0.68rem] font-semibold tracking-wide uppercase text-gold-400 whitespace-nowrap">DFW Luxury Rides</span>
           </div>
 
-          <h1 className={`playfair text-5xl lg:text-7xl font-bold leading-[1.05] mb-6 transition-all duration-700 delay-100 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
-            <span className="text-theme">Ride in</span>{' '}
-            <span className="italic text-theme">Luxury,</span><br />
-            <span className="text-gradient-gold">Arrive in</span>{' '}
-            <span className="italic text-gradient-gold">Style</span>
+          <h1 className={`playfair text-4xl sm:text-5xl lg:text-7xl font-bold leading-[1.08] mb-6 break-words transition-all duration-700 delay-100 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
+            <span className="text-theme">Novaria</span>{' '}
+            <span className="italic text-theme">Transportation</span><br />
+            <span className="text-gradient-gold">DFW Luxury</span>{' '}
+            <span className="italic text-gradient-gold">Car Service</span>
           </h1>
 
-          <p className={`text-theme-muted text-lg leading-relaxed max-w-md mb-10 transition-all duration-700 delay-200 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
-            Professional limo car service for airport transfers, corporate travel, weddings, and special events across Dallas and the DFW metroplex.
+          <p className={`text-theme-muted text-base sm:text-lg leading-relaxed max-w-md mb-8 sm:mb-10 transition-all duration-700 delay-200 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
+            Luxury transportation, DFW airport transfers, executive car service, and private chauffeur service for airport travelers, executives, families, and corporate clients across Dallas-Fort Worth.
           </p>
 
           <div className={`flex flex-wrap justify-start gap-4 mb-14 transition-all duration-700 delay-300 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
             <button onClick={scrollToBooking}
-              className="btn-primary inline-flex w-fit items-center gap-2 px-8 py-4 rounded-full text-base font-bold">
+              className="btn-primary inline-flex w-full sm:w-fit items-center justify-center gap-2 px-6 sm:px-8 py-4 rounded-full text-base font-bold">
               Reserve Your Ride <ArrowRight size={18} />
             </button>
           </div>
 
-          <div className={`flex flex-wrap gap-8 transition-all duration-700 delay-[400ms] ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
-            {[{val:'24/7',label:'Availability'},{val:'VIP',label:'Customer Care'},{val:'DFW',label:'Airport Service'}].map((s) => (
+          <div className={`grid grid-cols-3 gap-3 sm:flex sm:flex-wrap sm:gap-8 transition-all duration-700 delay-[400ms] ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
+            {[{val:'24/7',label:'Availability'},{val:'VIP',label:'Executive Care'},{val:'DFW',label:'Airport Service'}].map((s) => (
               <div key={s.val} className="flex flex-col">
-                <span className="text-2xl font-black text-gold-400">{s.val}</span>
-                <span className="text-xs text-theme-subtle tracking-widest uppercase mt-0.5">{s.label}</span>
+                <span className="text-xl sm:text-2xl font-black text-gold-400">{s.val}</span>
+                <span className="text-[0.65rem] sm:text-xs text-theme-subtle tracking-wide sm:tracking-widest uppercase mt-0.5">{s.label}</span>
               </div>
             ))}
           </div>
@@ -113,7 +113,7 @@ export default function Hero() {
         <div className={`transition-all duration-1000 delay-500 ${visible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'}`}>
           <div className="relative">
             <div className="absolute inset-0 bg-gold-500/10 blur-3xl rounded-3xl" />
-            <div className="relative glass rounded-3xl p-8 gold-border">
+            <div className="relative glass rounded-3xl p-5 sm:p-8 gold-border">
               <div className="flex items-center justify-between mb-6">
                 <p className="text-xs font-bold tracking-[0.2em] uppercase text-gold-400/80">Luxury Experience</p>
                 <div className="flex items-center gap-1">
@@ -122,14 +122,14 @@ export default function Hero() {
               </div>
 
               <div className="space-y-3 mb-6">
-                <div className="flex items-center justify-between p-4 rounded-2xl bg-black/[0.04] dark:bg-white/[0.03] border border-theme">
+                <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between p-4 rounded-2xl bg-black/[0.04] dark:bg-white/[0.03] border border-theme">
                   <span className="text-sm text-theme font-medium">Executive Class</span>
                   <span className="text-xs bg-gold-500 text-black font-bold px-3 py-1 rounded-full">Premium Fleet</span>
                 </div>
                 {[
-                  {title:'Airport Pickup', sub:'On-time service for DFW and Love Field'},
-                  {title:'Special Events', sub:'Weddings, prom, birthdays, and nights out'},
-                  {title:'Corporate Travel', sub:'Professional transportation for meetings'},
+                  {title:'Airport Pickup', sub:'DFW Airport and Dallas Love Field transfers'},
+                  {title:'Executive Car Service', sub:'Professional chauffeur service for meetings'},
+                  {title:'Corporate Travel', sub:'Transportation for clients, teams, and VIP guests'},
                 ].map((item) => (
                   <div key={item.title}
                     className="p-4 rounded-2xl border border-theme hover:border-gold-500/25 hover:bg-gold-500/5 transition-all duration-300 cursor-pointer">

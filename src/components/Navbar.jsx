@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Menu, X, MessageSquare } from 'lucide-react';
 import { NAV_LINKS, PHONE_NUMBER, WHATSAPP_NUMBER } from '../data';
+import { navigateToRoute } from '../lib/navigation';
 
 export default function Navbar({ user, onDashboard, onTitleChange }) {
   const [scrolled, setScrolled] = useState(false);
@@ -15,7 +16,15 @@ export default function Navbar({ user, onDashboard, onTitleChange }) {
   const handleNavClick = (href, title) => {
     setMobileOpen(false);
     onTitleChange?.(title);
-    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
+    const target = document.querySelector(href);
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth' });
+      return;
+    }
+    navigateToRoute('home');
+    window.setTimeout(() => {
+      document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
+    }, 60);
   };
 
   return (
@@ -23,12 +32,12 @@ export default function Navbar({ user, onDashboard, onTitleChange }) {
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled ? 'glass border-b border-theme py-3' : 'bg-transparent py-5'
       }`}>
-        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between">
           {/* Logo */}
-          <button onClick={() => { onTitleChange?.('Novaria Limo'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+          <button onClick={() => { onTitleChange?.('Novaria Transportation'); navigateToRoute('home'); window.setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 60); }}
             className="inline-flex flex-col items-center leading-none focus:outline-none">
-            <span className="text-xl font-black tracking-widest text-theme">NOVARIA</span>
-            <span className="text-sm font-semibold tracking-[0.68em] text-gold-500 uppercase mt-1">Limo</span>
+            <span className="text-lg sm:text-xl font-black tracking-widest text-theme">NOVARIA</span>
+            <span className="text-[0.62rem] sm:text-xs font-semibold tracking-[0.18em] sm:tracking-[0.28em] text-gold-500 uppercase mt-1">Transportation</span>
           </button>
 
           {/* Desktop links */}
@@ -50,13 +59,15 @@ export default function Navbar({ user, onDashboard, onTitleChange }) {
               className="flex items-center gap-2 text-sm font-medium text-theme-muted hover:text-theme transition-colors">
               <WhatsAppIcon size={14} /><span>WhatsApp</span>
             </a>
-            <button onClick={() => {
-              onTitleChange?.(user ? 'Dashboard' : 'Login');
-              (onDashboard || (() => { window.location.hash = '#login'; }))();
-            }}
-              className="btn-outline px-4 py-2.5 rounded-full text-sm font-bold">
-              {user ? 'Dashboard' : 'Login'}
-            </button>
+            {user && (
+              <button onClick={() => {
+                onTitleChange?.('Dashboard');
+                onDashboard?.();
+              }}
+                className="btn-outline px-4 py-2.5 rounded-full text-sm font-bold">
+                Dashboard
+              </button>
+            )}
             <button onClick={() => handleNavClick('#booking', 'Booking')}
               className="btn-primary px-5 py-2.5 rounded-full text-sm font-bold">
               Book Now
@@ -80,13 +91,13 @@ export default function Navbar({ user, onDashboard, onTitleChange }) {
       }`}>
         <div className="absolute inset-0 dark:bg-black/45 bg-white/35 backdrop-blur-sm"
           onClick={() => setMobileOpen(false)} />
-        <div className={`absolute top-0 right-0 h-full w-80 glass border-l border-theme p-8 flex flex-col transition-transform duration-300 ${
+        <div className={`absolute top-0 right-0 h-full w-[min(20rem,calc(100vw-1rem))] glass border-l border-theme p-5 sm:p-8 flex flex-col overflow-y-auto transition-transform duration-300 ${
           mobileOpen ? 'translate-x-0' : 'translate-x-full'
         } dark:bg-black/55 bg-white/65 backdrop-blur-2xl`}>
-          <div className="flex justify-between items-center mb-10">
+          <div className="flex justify-between items-center gap-4 mb-8 sm:mb-10">
             <div className="inline-flex flex-col items-center leading-none">
               <span className="text-gold-400 font-black tracking-widest">NOVARIA</span>
-              <span className="text-xs font-semibold tracking-[0.58em] text-gold-400 uppercase mt-1">Limo</span>
+              <span className="text-[0.62rem] font-semibold tracking-[0.16em] sm:tracking-[0.22em] text-gold-400 uppercase mt-1">Transportation</span>
             </div>
             <button
               onClick={() => setMobileOpen(false)}
@@ -120,14 +131,16 @@ export default function Navbar({ user, onDashboard, onTitleChange }) {
               className="btn-primary w-full py-4 rounded-2xl text-base font-bold">
               Book Now
             </button>
-            <button onClick={() => {
-              setMobileOpen(false);
-              onTitleChange?.(user ? 'Dashboard' : 'Login');
-              (onDashboard || (() => { window.location.hash = '#login'; }))();
-            }}
-              className="btn-outline w-full py-4 rounded-2xl text-base font-bold">
-              {user ? 'Dashboard' : 'Login'}
-            </button>
+            {user && (
+              <button onClick={() => {
+                setMobileOpen(false);
+                onTitleChange?.('Dashboard');
+                onDashboard?.();
+              }}
+                className="btn-outline w-full py-4 rounded-2xl text-base font-bold">
+                Dashboard
+              </button>
+            )}
           </div>
         </div>
       </div>

@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { ArrowRight, LockKeyhole, Mail, ShieldCheck, UserPlus, UserRound } from 'lucide-react';
 import { api, socialLoginUrl } from '../lib/api';
+import { navigateToRoute } from '../lib/navigation';
 
 export default function Login({ onLogin }) {
-  const [, query = ''] = window.location.hash.split('?');
+  const [, hashQuery = ''] = window.location.hash.split('?');
+  const query = window.location.search.replace('?', '') || hashQuery;
   const oauthError = new URLSearchParams(query).get('error');
   const [mode, setMode] = useState('user');
   const [authMode, setAuthMode] = useState('login');
@@ -15,7 +17,7 @@ export default function Login({ onLogin }) {
 
   const openDashboard = (account) => {
     onLogin(account);
-    window.location.hash = account.role === 'admin' ? '#admin' : '#dashboard';
+    navigateToRoute(account.role === 'admin' ? 'admin' : 'dashboard');
   };
 
   const submitUser = async (event) => {
@@ -50,24 +52,24 @@ export default function Login({ onLogin }) {
   };
 
   return (
-    <main className="min-h-screen section-bg pt-28 pb-16">
-      <div className="mx-auto grid max-w-6xl gap-8 px-6 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+    <main className="min-h-dvh section-bg pt-24 sm:pt-28 pb-16">
+      <div className="mx-auto grid max-w-6xl gap-8 px-4 sm:px-6 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
         <section className="space-y-8">
           <button
-            onClick={() => { window.location.hash = '#home'; }}
+            onClick={() => navigateToRoute('home')}
             className="btn-outline rounded-full px-4 py-2 text-sm"
           >
             Back to site
           </button>
 
           <div>
-            <p className="mb-4 text-xs font-bold uppercase tracking-[0.3em] text-gold-400">Private Access</p>
-            <h1 className="playfair mb-5 text-5xl font-bold leading-tight text-theme md:text-6xl">
-              Your Novaria<br />
+            <p className="mb-4 text-xs font-bold uppercase tracking-[0.22em] sm:tracking-[0.3em] text-gold-400">Private Access</p>
+            <h1 className="playfair mb-5 text-4xl font-bold leading-tight text-theme sm:text-5xl md:text-6xl break-words">
+              Your Novaria Transportation<br />
               <span className="text-gradient-gold italic">command suite</span>
             </h1>
             <p className="max-w-xl text-base leading-8 text-theme-muted">
-              Riders can use a Novaria account or a trusted social account. Admins use protected credentials to monitor bookings, revenue, service demand, and upcoming rides.
+              Riders can use a Novaria Transportation account or a trusted social account. Admins use protected credentials to monitor bookings, revenue, service demand, and upcoming rides.
             </p>
           </div>
 
@@ -85,7 +87,7 @@ export default function Login({ onLogin }) {
           </div>
         </section>
 
-        <section className="glass gold-border p-5 md:p-8">
+        <section className="glass gold-border p-5 md:p-8 min-w-0">
           <div className="mb-7 grid grid-cols-2 gap-2 bg-black/[0.04] p-1 dark:bg-white/[0.04]">
             <button
               onClick={() => setMode('user')}

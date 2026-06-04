@@ -14,7 +14,7 @@ function useInView(threshold = 0.1) {
   return [ref, inView];
 }
 
-// Per-card image parallax — image shifts inside the card as you scroll
+// Per-card image parallax shifts the image inside the card as you scroll.
 function ParallaxPhoto({ src, alt }) {
   return (
     <div className="relative h-64 overflow-hidden group bg-black">
@@ -61,17 +61,21 @@ export default function Fleet({ onSelectVehicle }) {
   };
 
   return (
-    <section id="fleet" ref={sectionRef} className="relative py-24 overflow-hidden section-bg">
+    <section id="fleet" ref={sectionRef} className="relative py-16 sm:py-24 overflow-hidden section-bg">
       <ParallaxBg factor={0.28} className="bottom-0 left-1/3 w-[500px] h-[500px] rounded-full bg-gold-500/[0.04] blur-[110px]" />
       <ParallaxBg factor={0.18} className="-top-20 right-10 w-72 h-72 rounded-full bg-gold-500/[0.03] blur-[90px]" />
 
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
 
         {/* Header */}
         <div className={`text-center mb-12 transition-all duration-700 ${
           inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
         }`}>
-          <p className="text-xs font-bold tracking-[0.3em] uppercase text-gold-400">Our Fleet</p>
+          <p className="text-xs font-bold tracking-[0.22em] sm:tracking-[0.3em] uppercase text-gold-400">Our Fleet</p>
+          <h2 className="playfair mt-4 text-3xl sm:text-4xl font-bold text-theme">Luxury SUVs for DFW Airport and Chauffeur Service</h2>
+          <p className="mx-auto mt-5 max-w-3xl text-sm leading-7 text-theme-muted">
+            Choose a luxury SUV or full-size SUV for airport luggage, executive travel, family transportation, corporate guests, and hourly service across Dallas-Fort Worth.
+          </p>
           <div className="section-divider mx-auto mt-6" />
         </div>
 
@@ -110,13 +114,13 @@ export default function Fleet({ onSelectVehicle }) {
                   </div>
                 </div>
 
-                <div className="p-6">
+                <div className="p-5 sm:p-6">
                   <div className="mb-5">
                     <h3 className="text-xl font-bold text-theme mb-1">{vehicle.name}</h3>
                     <div className="h-px w-12 bg-gradient-to-r from-gold-500/60 to-transparent mt-2" />
                   </div>
 
-                  <div className="flex gap-6 mb-6">
+                  <div className="grid gap-4 sm:flex sm:gap-6 mb-6">
                     {[
                       { Icon: Users,    label: 'Passengers', val: vehicle.passengers },
                       { Icon: Briefcase,label: 'Luggage',    val: `${vehicle.luggage} bags` },
@@ -160,7 +164,7 @@ export default function Fleet({ onSelectVehicle }) {
                         : 'btn-outline'
                     }`}
                   >
-                    {selected === vehicle.id ? 'Selected — Continue Booking' : 'Select & Book'}
+                    {selected === vehicle.id ? 'Selected - Continue Booking' : 'Select & Book'}
                     <ChevronRight size={16} />
                   </button>
                 </div>

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Calendar, Car, CheckCircle, Clock, DollarSign, Home, LogOut, RefreshCw, ShieldCheck, UserRound, Users } from 'lucide-react';
 import { api } from '../lib/api';
+import { navigateToRoute } from '../lib/navigation';
 
 const STATUSES = ['pending', 'confirmed', 'assigned', 'completed', 'cancelled'];
 
@@ -38,7 +39,7 @@ export default function Dashboard({ user, onLogout }) {
 
   useEffect(() => {
     if (!user) {
-      window.location.hash = '#login';
+      navigateToRoute('login');
       return;
     }
     const timer = setTimeout(() => {
@@ -60,7 +61,7 @@ export default function Dashboard({ user, onLogout }) {
   const logout = async () => {
     await api.logout();
     onLogout();
-    window.location.hash = '#home';
+    navigateToRoute('home');
   };
 
   if (!user) {
@@ -68,9 +69,9 @@ export default function Dashboard({ user, onLogout }) {
   }
 
   return (
-    <main className="min-h-screen section-bg">
+    <main className="min-h-dvh section-bg">
       <header className="border-b border-theme bg-black text-white dark:bg-black">
-        <div className="mx-auto flex max-w-7xl flex-col gap-5 px-6 py-6 md:flex-row md:items-center md:justify-between">
+        <div className="mx-auto flex max-w-7xl flex-col gap-5 px-4 sm:px-6 py-6 md:flex-row md:items-center md:justify-between">
           <div className="flex items-center gap-4">
             {user.avatar_url ? (
               <img src={user.avatar_url} alt="" className="h-14 w-14 rounded-full border border-gold-500/40 object-cover" />
@@ -80,14 +81,14 @@ export default function Dashboard({ user, onLogout }) {
               </div>
             )}
             <div>
-              <p className="text-xs font-bold uppercase tracking-[0.3em] text-gold-400">{isAdmin ? 'Admin Dashboard' : 'User Dashboard'}</p>
-              <h1 className="mt-1 text-2xl font-black">{user.full_name}</h1>
+              <p className="text-xs font-bold uppercase tracking-[0.18em] sm:tracking-[0.3em] text-gold-400">{isAdmin ? 'Admin Dashboard' : 'User Dashboard'}</p>
+              <h1 className="mt-1 text-xl sm:text-2xl font-black break-words">{user.full_name}</h1>
               <p className="text-sm text-white/55">{user.email}</p>
             </div>
           </div>
 
-          <div className="flex flex-wrap gap-3">
-            <button onClick={() => { window.location.hash = '#home'; }} className="btn-outline flex items-center gap-2 border-white/20 px-4 py-3 text-white">
+          <div className="grid grid-cols-1 gap-3 sm:flex sm:flex-wrap">
+            <button onClick={() => navigateToRoute('home')} className="btn-outline flex items-center gap-2 border-white/20 px-4 py-3 text-white">
               <Home size={17} /> Site
             </button>
             <button onClick={load} className="btn-outline flex items-center gap-2 border-white/20 px-4 py-3 text-white">
@@ -100,7 +101,7 @@ export default function Dashboard({ user, onLogout }) {
         </div>
       </header>
 
-      <div className="mx-auto max-w-7xl px-6 py-10">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 py-8 sm:py-10">
         {isAdmin ? (
           <AdminDashboard stats={stats} serviceMix={serviceMix} bookings={bookings} loading={loading} onUpdated={load} />
         ) : (
@@ -118,10 +119,10 @@ function UserDashboard({ metrics, bookings, loading }) {
         {metrics.map((metric) => {
           const Icon = metric.icon;
           return (
-            <div key={metric.label} className="card-luxury p-6">
+            <div key={metric.label} className="card-luxury p-5 sm:p-6">
               <Icon className="mb-5 text-gold-400" size={26} />
               <p className="text-4xl font-black text-theme">{metric.value}</p>
-              <p className="mt-2 text-xs font-bold uppercase tracking-widest text-theme-subtle">{metric.label}</p>
+              <p className="mt-2 text-xs font-bold uppercase tracking-wide sm:tracking-widest text-theme-subtle">{metric.label}</p>
             </div>
           );
         })}
@@ -129,9 +130,9 @@ function UserDashboard({ metrics, bookings, loading }) {
 
       <section className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">
         <BookingList bookings={bookings} loading={loading} />
-        <div className="surface-bg border border-theme p-6">
-          <p className="text-xs font-bold uppercase tracking-[0.3em] text-gold-400">Concierge Notes</p>
-          <h2 className="mt-3 text-2xl font-black text-theme">Ride readiness</h2>
+        <div className="surface-bg border border-theme p-5 sm:p-6">
+          <p className="text-xs font-bold uppercase tracking-[0.22em] sm:tracking-[0.3em] text-gold-400">Concierge Notes</p>
+          <h2 className="mt-3 text-xl sm:text-2xl font-black text-theme">Ride readiness</h2>
           <div className="mt-6 space-y-4">
             {['Confirm pickup address before dispatch', 'Keep your phone available near pickup time', 'Status changes appear here once admin confirms'].map((item) => (
               <div key={item} className="flex gap-3 border-b border-theme pb-4 last:border-0">
@@ -160,18 +161,18 @@ function AdminDashboard({ stats, serviceMix, bookings, loading, onUpdated }) {
         {cards.map((card) => {
           const Icon = card.icon;
           return (
-            <div key={card.label} className="card-luxury p-6">
+            <div key={card.label} className="card-luxury p-5 sm:p-6">
               <Icon className="mb-5 text-gold-400" size={26} />
               <p className="text-3xl font-black text-theme">{card.value}</p>
-              <p className="mt-2 text-xs font-bold uppercase tracking-widest text-theme-subtle">{card.label}</p>
+              <p className="mt-2 text-xs font-bold uppercase tracking-wide sm:tracking-widest text-theme-subtle">{card.label}</p>
             </div>
           );
         })}
       </section>
 
       <section className="grid gap-8 xl:grid-cols-[0.7fr_1.3fr]">
-        <div className="surface-bg border border-theme p-6">
-          <p className="text-xs font-bold uppercase tracking-[0.3em] text-gold-400">Demand Mix</p>
+        <div className="surface-bg border border-theme p-5 sm:p-6">
+          <p className="text-xs font-bold uppercase tracking-[0.22em] sm:tracking-[0.3em] text-gold-400">Demand Mix</p>
           <h2 className="mt-3 text-2xl font-black text-theme">Services</h2>
           <div className="mt-6 space-y-4">
             {serviceMix.length ? serviceMix.map((item) => (
@@ -196,10 +197,10 @@ function AdminDashboard({ stats, serviceMix, bookings, loading, onUpdated }) {
 
 function BookingList({ bookings, loading }) {
   return (
-    <section className="surface-bg border border-theme p-6">
+    <section className="surface-bg border border-theme p-5 sm:p-6">
       <div className="mb-6 flex items-end justify-between gap-4">
         <div>
-          <p className="text-xs font-bold uppercase tracking-[0.3em] text-gold-400">Ride Timeline</p>
+          <p className="text-xs font-bold uppercase tracking-[0.22em] sm:tracking-[0.3em] text-gold-400">Ride Timeline</p>
           <h2 className="mt-3 text-2xl font-black text-theme">My bookings</h2>
         </div>
       </div>
@@ -211,7 +212,7 @@ function BookingList({ bookings, loading }) {
           {bookings.map((booking) => <BookingRow key={booking.id} booking={booking} />)}
         </div>
       ) : (
-        <p className="text-sm text-theme-muted">No saved bookings yet. Book a ride and it will appear here when you are signed in.</p>
+        <p className="text-sm text-theme-muted">No saved bookings yet. Book a ride with Novaria Transportation and it will appear here when you are signed in.</p>
       )}
     </section>
   );
@@ -238,9 +239,9 @@ function BookingRow({ booking }) {
 
 function AdminBookings({ bookings, loading, onUpdated }) {
   return (
-    <section className="surface-bg border border-theme p-6">
+    <section className="surface-bg border border-theme p-5 sm:p-6">
       <div className="mb-6">
-        <p className="text-xs font-bold uppercase tracking-[0.3em] text-gold-400">Operations</p>
+        <p className="text-xs font-bold uppercase tracking-[0.22em] sm:tracking-[0.3em] text-gold-400">Operations</p>
         <h2 className="mt-3 text-2xl font-black text-theme">Booking control</h2>
       </div>
 

@@ -167,17 +167,17 @@ export default function BookingForm({ preselectedVehicle }) {
   const reset = () => { setForm(EMPTY); setStep(0); setSubmitted(false); setSubmitMethod('WhatsApp'); setBookingStatus(''); setErrors({}); };
 
   return (
-    <section id="booking" ref={sectionRef} className="relative py-24 overflow-hidden section-bg">
+    <section id="booking" ref={sectionRef} className="relative py-16 sm:py-24 overflow-hidden section-bg">
       <ParallaxBg factor={0.20} className="top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] rounded-full bg-gold-500/[0.03] blur-[150px]" />
       <ParallaxBg factor={0.38} className="top-0 right-0 w-72 h-72 rounded-full bg-gold-500/[0.025] blur-[100px]" />
 
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid lg:grid-cols-2 gap-16 items-start">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-start">
 
           {/* Left: info */}
           <div className={`lg:sticky lg:top-32 transition-all duration-700 ${inView ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'}`}>
-            <p className="text-xs font-bold tracking-[0.3em] uppercase text-gold-400 mb-4">Reserve Your Ride</p>
-            <h2 className="playfair text-4xl md:text-5xl font-bold text-theme mb-6">
+            <p className="text-xs font-bold tracking-[0.22em] sm:tracking-[0.3em] uppercase text-gold-400 mb-4">Reserve Your Ride</p>
+            <h2 className="playfair text-3xl sm:text-4xl md:text-5xl font-bold text-theme mb-6">
               Book Your<br />
               <span className="text-gradient-gold italic">Luxury Journey</span>
             </h2>
@@ -217,9 +217,9 @@ export default function BookingForm({ preselectedVehicle }) {
             {submitted ? (
               <SuccessCard onReset={reset} form={form} submitMethod={submitMethod} bookingStatus={bookingStatus} />
             ) : (
-              <div className="glass rounded-3xl p-8 gold-border">
+              <div className="glass rounded-3xl p-5 sm:p-8 gold-border">
                 {/* Step indicator */}
-                <div className="flex items-center gap-0 mb-8">
+                <div className="flex items-start gap-0 mb-8 overflow-hidden">
                   {STEPS.map((s, i) => (
                     <div key={s} className="flex items-center flex-1">
                       <div className="flex flex-col items-center gap-1.5">
@@ -230,7 +230,7 @@ export default function BookingForm({ preselectedVehicle }) {
                         } ${i < step || i === step ? '' : 'bg-black/[0.03] dark:bg-white/5'}`}>
                           {i < step ? <CheckCircle size={15} /> : i + 1}
                         </div>
-                        <span className={`text-[10px] font-semibold tracking-widest uppercase ${i <= step ? 'text-gold-400' : 'text-theme-subtle'}`}>
+                        <span className={`text-[0.58rem] sm:text-[10px] font-semibold tracking-wide sm:tracking-widest uppercase ${i <= step ? 'text-gold-400' : 'text-theme-subtle'}`}>
                           {s}
                         </span>
                       </div>
@@ -286,7 +286,7 @@ export default function BookingForm({ preselectedVehicle }) {
                       <h3 className="text-lg font-bold text-theme mb-2">Trip Details</h3>
                       <p className="text-sm text-theme-muted mb-6">We need a few details to prepare your ride.</p>
                     </div>
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div className="col-span-2">
                         <Field label="Full Name"     id="fullName" value={form.fullName} onChange={set('fullName')} placeholder="John Doe"              required error={errors.fullName} />
                       </div>
@@ -301,10 +301,10 @@ export default function BookingForm({ preselectedVehicle }) {
                           id="dropoff" value={form.dropoff} onChange={set('dropoff')} placeholder="Hotel, office, or address"
                           required={form.serviceType !== 'Hourly Service'} error={errors.dropoff} />
                       </div>
-                      <div>
+                      <div className="sm:col-span-1">
                         <Field label="Date" id="date" type="date" value={form.date} onChange={set('date')} min={today} required error={errors.date} />
                       </div>
-                      <div>
+                      <div className="sm:col-span-1">
                         <Field label="Time" id="time" type="time" value={form.time} onChange={set('time')} required error={errors.time} />
                       </div>
                     </div>
@@ -387,9 +387,9 @@ export default function BookingForm({ preselectedVehicle }) {
                         { label:'Vehicle',    value: form.vehicleType || 'No preference' },
                         ...(form.specialRequest ? [{ label:'Notes', value: form.specialRequest }] : []),
                       ].map((row) => (
-                        <div key={row.label} className="flex justify-between items-start py-3 border-b border-theme last:border-0">
-                          <span className="text-xs text-theme-subtle uppercase tracking-widest w-28 flex-shrink-0">{row.label}</span>
-                          <span className="text-sm text-theme text-right">{row.value}</span>
+                        <div key={row.label} className="grid gap-1 py-3 border-b border-theme last:border-0 sm:flex sm:justify-between sm:items-start">
+                          <span className="text-xs text-theme-subtle uppercase tracking-widest sm:w-28 sm:flex-shrink-0">{row.label}</span>
+                          <span className="text-sm text-theme break-words sm:text-right">{row.value}</span>
                         </div>
                       ))}
                     </div>
@@ -402,10 +402,10 @@ export default function BookingForm({ preselectedVehicle }) {
                 )}
 
                 {/* Nav buttons */}
-                <div className="flex gap-3 mt-8">
+                <div className="flex flex-col sm:flex-row gap-3 mt-8">
                   {step > 0 && (
                     <button onClick={back}
-                      className="btn-outline flex items-center gap-2 px-5 py-3.5 rounded-2xl text-sm font-semibold">
+                      className="btn-outline flex items-center justify-center gap-2 px-5 py-3.5 rounded-2xl text-sm font-semibold">
                       <ChevronLeft size={16} />Back
                     </button>
                   )}
@@ -415,7 +415,7 @@ export default function BookingForm({ preselectedVehicle }) {
                       Continue <ChevronRight size={16} />
                     </button>
                   ) : (
-                    <div className="flex-1 grid sm:grid-cols-2 gap-3">
+                    <div className="flex-1 grid gap-3 sm:grid-cols-2">
                       <button onClick={submit}
                         className="btn-primary flex items-center justify-center gap-2 py-3.5 rounded-2xl text-sm font-bold">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.534 5.858L0 24l6.335-1.51A11.95 11.95 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.791 9.791 0 01-4.994-1.368l-.358-.213-3.76.897.947-3.666-.234-.376A9.79 9.79 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/></svg>
@@ -440,7 +440,7 @@ export default function BookingForm({ preselectedVehicle }) {
 
 function SuccessCard({ onReset, form, submitMethod, bookingStatus }) {
   return (
-    <div className="glass rounded-3xl p-10 gold-border text-center">
+    <div className="glass rounded-3xl p-5 sm:p-10 gold-border text-center">
       <div className="w-20 h-20 rounded-full bg-green-500/15 border border-green-500/30 flex items-center justify-center mx-auto mb-6 animate-pulse-gold">
         <CheckCircle size={36} className="text-green-500" />
       </div>
@@ -448,7 +448,7 @@ function SuccessCard({ onReset, form, submitMethod, bookingStatus }) {
       <p className="text-theme-muted text-sm leading-relaxed mb-8">
         Thank you <span className="text-gold-400">{form.fullName}</span>. Your booking has been sent to our team via {submitMethod}. We'll confirm within 15 minutes.
       </p>
-      <div className="text-left space-y-2 mb-8 p-5 rounded-2xl border border-theme" style={{ background: 'var(--bg-card)' }}>
+      <div className="text-left space-y-2 mb-8 p-4 sm:p-5 rounded-2xl border border-theme" style={{ background: 'var(--bg-card)' }}>
         <p className="text-xs text-theme-subtle uppercase tracking-widest mb-3">Booking Summary</p>
         <p className="text-sm text-theme"><span className="text-gold-400">Service:</span> {form.serviceType}</p>
         <p className="text-sm text-theme"><span className="text-gold-400">Date:</span> {form.date} at {form.time}</p>
